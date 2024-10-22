@@ -47,10 +47,10 @@ struct BinaryMatrix {
     /// <summary>
     /// 获取某行列上的值
     /// </summary>
-    /// <param name="col"></param>
     /// <param name="row"></param>
+    /// <param name="col"></param>
     /// <returns></returns>
-    int getValue(int col, int row) const {
+    int getValue(int row, int col) const {
         if (col >= 0 && col < cols && row >= 0 && row < rows) {
             return data[row * cols + col];
         }
@@ -131,8 +131,8 @@ struct BinaryMatrix {
 
         for (int col = 0; col < cols; ++col) {
             for (int row = 0; row < rows; ++row) {
-                if (getValue(col, row) == 1) {
-                    result.emplace_back(col, row);
+                if (getValue(row, col) == 1) {
+                    result.emplace_back(row, col);
                     break; // 找到第一个值为1的点后，跳出当前列的循环
                 }
             }
@@ -150,8 +150,8 @@ struct BinaryMatrix {
 
         for (int col = 0; col < cols; ++col) {
             for (int row = rows - 1; row >= 0; --row) {
-                if (getValue(col, row) == 1) {
-                    result.emplace_back(col, row);
+                if (getValue(row, col) == 1) {
+                    result.emplace_back(row, col);
                     break; // 找到第一个值为1的点后，跳出当前列的循环
                 }
             }
@@ -233,7 +233,7 @@ std::vector<PointF> GetTrajectoryPathWithRadius(const std::vector<PointF>& origi
         point.col += min_col;
         double row = (double)point.row / factor;
         double col = (double)point.col / factor;
-        outputPoints.emplace_back(PointF(row, col));
+        outputPoints.emplace_back(PointF(col, row));
     }
 
     return outputPoints;
